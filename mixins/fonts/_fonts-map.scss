@@ -1,0 +1,156 @@
+﻿@import 'validation/format';
+@import 'validation/attribute';
+@import 'validation/value';
+
+@function fonts-format($url){
+    @each $format in $validation-format {
+        @if str-index(str-slice($url, str-length($url) - (str-length($format) + 1), str-length($url)), $format) {
+            @return str-slice($format, 2, str-length($format));   
+        } 
+    }
+}
+//
+$local-rewriting: '' !default;
+@function fonts-local($src){
+    @each $src-attr, $src-value in $src {
+        @if $src-attr == local {
+            @each $local in $src-value {
+                $local-rewriting: str-insert($local-rewriting, "local('#{$local}'), ", 1) !global;
+            }
+            $local-result: $local-rewriting;
+            //? Сборс данных из цикла
+            $local-rewriting:'' !global;
+            @return str-slice($local-result, 0, -3);
+        }
+    }   
+}
+//
+$url-rewriting: '' !default;
+@function fonts-url($src){
+    @each $src-attr, $src-value in $src {
+        @if $src-attr == url {                
+            @each $url in $src-value {
+                $url-rewriting: str-insert($url-rewriting, "url('#{$url}') format('#{fonts-format($url)}'), ", 1) !global;
+            }
+            $url-result: $url-rewriting;
+            //? Сборс данных из цикла
+            $url-rewriting:'' !global;
+            @return str-slice($url-result, 0, -3);
+            
+        }
+    }   
+}
+//
+@mixin validation-value($valid-attr, $valid-value) {
+    @if $validation-font-value{
+        //? Проверяем если атрибут в $validation-value
+        @if map-get($validation-value, $valid-attr){     
+            //? Проверяем соответствует значение в $validation-value 
+            @if index(map-get($validation-value, $valid-attr), $valid-value){
+                font-#{$valid-attr}: unquote("#{$valid-value}");  
+            } @else {
+                @warn "Attribute value unknown, value sheet '#{$valid-attr}': #{map-get($validation-value, $valid-attr)}";
+            } 
+        }
+        @else {   
+           font-#{$valid-attr}: unquote("#{$valid-value}");
+        }
+    } @else {   
+        font-#{$valid-attr}: unquote("#{$valid-value}");
+    }
+}
+//
+@mixin validation-attribute($valid-atrr) {
+    //? проверяем $validation-attribute--condition на true/false
+    @if $validation-font-attribute {
+        //? проверяем $validation-attribute на ключи $fonts
+        @if index($validation-attribute, $valid-atrr){
+            @content;
+        } @else {
+            @warn "Attribute not found, list attributes: #{$validation-attribute}";
+        }
+    } @else {
+        @content;
+    }
+}
+//
+@mixin fonts {
+//
+@each $font-key in map-keys($fonts) {
+//
+@font-face {
+    //
+    @each $attr, $value in map-get($fonts, $font-key) {
+        //? проверка является ли строкой или номером
+        @if type-of($value) == string or type-of($value) == number { 
+            //? проверка атрибута
+            @include validation-attribute($attr) {
+                //? Проверка значение fonts
+                @include validation-value($attr, $value);
+            }     
+                  
+        }  
+        //*
+        @if type-of($value) == map {
+            @include validation-attribute($attr) { 
+                @if $attr == src {
+                    $src-separation: unquote('') !global;
+                    @if map-has-key($value, local) {
+                        $src-local-result: unquote(fonts-local($value)) !global; 
+                    } @else {
+                        $src-local-result: unquote('') !global;
+                    }  
+                    @if map-has-key($value, url) {
+                        $src-url-result: unquote(fonts-url($value)) !global;   
+                    } @else {
+                        $src-url-result: unquote('') !global;
+                    }                      
+                    @if map-has-key($value, url) and map-has-key($value, local) {
+                        $src-separation: unquote(',') !global;  
+                        
+                    }
+                }
+                src: $src-local-result $src-separation $src-url-result;
+            }
+        }
+        //
+        @if type-of($value) == list {
+            @include validation-attribute($attr) { 
+                @if $attr == unicode-range {
+                                    //
+                    unicode-range: unquote("#{$value}");
+                }
+            }
+            @if $attr == smooth {
+                $webkit-font-smoothing: auto, none, antialiased, subpixel-antialiased;
+                @if index($webkit-font-smoothing, nth($value, 1)){
+                    -webkit-font-smoothing: nth($value, 1);
+                } @else {
+                   @warn '
+                    1 value   -webkit-font-smoothing = auto, none, antialiased, subpixel-antialiased
+                    2 value   -moz-osx-font-smoothing = auto, grayscale
+                   ';
+                }
+                $moz-osx-font-smoothing: auto, grayscale;
+                @if index($moz-osx-font-smoothing, nth($value, 2)){
+                    -moz-osx-font-smoothing:  nth($value, 2);
+                } @else {
+                    @warn '
+                    1 value   -webkit-font-smoothing = auto, none, antialiased, subpixel-antialiased
+                    2 value   -moz-osx-font-smoothing = auto, grayscale
+                   ';
+                }
+            }
+        }
+        //! Вывод ошибки smooth
+        @if type-of($value) == string {
+            @if $attr == smooth {
+                @warn "'smooth' can only 'list' (antialiased, grayscale)";
+            }
+        }
+    }   
+}         
+}
+};
+// 
+@include fonts;

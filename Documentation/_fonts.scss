@@ -1,0 +1,71 @@
+﻿//mod  Для _fonts.scss
+
+//?  Принимает значения:
+ 
+//*      family              - font-family                        
+//*      style               - font-style                         
+//*      weight              - font-weight                        
+//*      display             - font-display                       
+//*      src                 - является map                      
+//*      -  local            - local()                         
+//*      -  url              - url                     
+//*      unicode-range       - font-unicode-range                         
+//*      stretch             - font-stretch                       
+//*      variant             - font-variant                       
+//*      feature-settings    - font-feature-settings                          
+//*      kerning             - font-kerning                       
+//*      language-override   - font-language-override                         
+//*      optical-sizing      - font-optical-sizing                        
+//*      size                - font-size                          
+//*      size-adjust         - font-size-adjust                       
+//*      smooth              - -webkit-font-smoothing and -moz-osx-font-smoothing 
+//*      Атрибут smooth задавать только в виде листа (auto, auto)                         
+//*      synthesis           - font-synthesis                         
+//*      variant-alternates  - font-variant-alternates                        
+//*      variant-caps        - font-variant-caps                          
+//*      variant-east-asian  - font-variant-east-asian                        
+//*      variant-ligatures   - font-variant-ligatures                         
+//*      variant-numeric     - font-variant-numeric                       
+//*      variant-position    - font-variant-position                          
+//*      variation-settings  - font-variation-settings  
+
+//?  Пример использования:
+
+//*  $fonts:(
+//*      'Open Sans': (
+//*          family: "'Open Sans'",
+//*          style: normal,
+//*          weight: 400,
+//*          display: swap,
+//*          smooth: (auto, grayscale),
+//*          src:(     
+//*              local: (
+//*                  'Open Sans Regular 1', 
+//*              ),
+//*              url:(
+//*                  'https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVp0bbck.woff2',
+//*                  'https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVp0bbck.woff',
+//*                  'https://fonts.gstatic.com/s/opensans/v17/mem8YaGs126MiZpBA-UFVp0bbck.otf',
+//*              )
+//*          ),
+//*          unicode-range:('U+0102-0103', 'U+0110-0111', 'U+0128-0129')
+//*      ),
+//*      'Open Sans Bold': (
+//*          family: "'Open Sans'",
+//*          style: normal,
+//*          weight: 900,
+//*          display: swap, 
+//*          src:(  
+//*              local:(
+//*                  'Open Sans Bold',
+//*                  'OpenSans-Bold',
+//*                  'OpenSans-Bold regasd'
+//*              ),
+//*              url:(
+//*                  'https://fonts.gstatic.com/s/opensans/v17/mem8YaG.woff2',
+//*                  'https://fonts.gstatic.com/s/opensans/v17/mem8YaG.svg',
+//*              ),
+//*          ),
+//*          unicode-range: ('U+0102-0101', 'U+0110-013', 'U+0128-0000')
+//*      )
+//*  }  

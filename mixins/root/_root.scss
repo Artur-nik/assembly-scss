@@ -1,0 +1,15 @@
+﻿//? микс вывода css переменных 
+//*     @include root(
+//*             ':root',    - Селектор
+//*             $default    - Переменная где лежит map
+//*     );
+//*     @include root('', $default);
+@mixin root($selector, $var) {
+    $root-selector:unquote($selector);
+    #{$root-selector} {
+        @each $color, $value in $var {
+            --#{$color}: #{$value};
+        }
+        @content;
+    }  
+}

@@ -1,0 +1,11 @@
+﻿.container {
+    @extend %col-width;
+    @extend %gutters;
+    margin-right: auto;
+    margin-left: auto;
+    @each $breakpoints, $width in $container-max {
+        @include media($breakpoints){
+            max-width: #{$width};
+        }        
+    }
+}

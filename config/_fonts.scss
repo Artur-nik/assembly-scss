@@ -1,0 +1,9 @@
+﻿//* Проверка валидации атрибутов согласно списку $validation-attribute в _validation-font.scss
+$validation-font-attribute:true;    //* true / false 
+//* Проверка валидации значений атрибутов согласно списку $validation-value в _validation-font.scss
+$validation-font-value:true;        //* true / false 
+//! Внимание отключение проверки атрибутов и значений может привести к ошибке отображения шрифтов в браузере                    
+//*
+$fonts:(
+
+);

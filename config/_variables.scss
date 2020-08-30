@@ -1,0 +1,18 @@
+﻿//!  Если требуется вывод css переменных var(--value), то раскомментировать
+//  //? Задаем default переменную для функции root-var
+//  $default: (
+//      
+//  );
+//  
+//  //? микс вывода css переменных 
+//  @import 'mixins/root/root';
+//  //*     @include root('', $var);
+//  //? 
+//  @include root(':root', $default);
+//  
+//  //? Если требуется вывод для цветов
+//  //  @import 'color-dark';
+//  //  @include root('.theme-dark', $colors-dark);
+//  //?
+//  @import 'mixins/root/root-var';
+//? Функция root-var(value , второе значение - выводить ли css функцию var(--value), принимает логические операторы)

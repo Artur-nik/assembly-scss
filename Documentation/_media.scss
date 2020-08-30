@@ -1,0 +1,59 @@
+//*    @include media(sm, lg, print){
+//*        @content
+//*    } 
+//*
+//?    Первый аргумент - данные из переменной $media-breakpoints
+//?    Второй аргумент - данные из переменной $media-breakpoints или $modification
+//?    Третий аргумент - данные из переменной $media-type
+//*
+//?    Варианты применений
+
+//*        @include media(sm) {} - (min-width: 576px) Имеет default модификатор min
+//*        @include media(sm, min) {} - (min-width: 576px) 
+//*        @include media(sm, max) {} - (max-width: 576px)
+//*        @include media(sm, only) {} - (min-width: 576px) and (max-width: 767.99px)
+//*        @include media(sm, only-max) {} - (min-width: 576px) and (max-width: 1650px)
+//*        @include media(sm, lg) {} - (min-width: 576px) and (max-width: 991.99px)
+//*        @include media(no, no, screen) {} - screen
+//*        @include media(sm, only, screen) {} - screen and (min-width: 576px) and (max-width: 767.99px)
+//*        @include media(sm, lg, screen) {} - screen and (min-width: 576px) and (max-width: 991.99px)
+//*
+//*
+//?    Можно создавать свои перменные $media-breakpoints и $media-type
+//*
+//?    Breakpoint:
+//*
+//*        $media-breakpoints: (
+//*            sm: 576rem,       
+//*            md: 768px,          
+//*            lg: 992px,          
+//*            xl: 1200px             
+//*        )
+//*
+//?    Модификации:
+//*
+//*        min == min-width - задает min-width значение (min-width: 320px)
+//*        max == max-width- задает max-width значение (max-width: 320px)
+//*        only == min-width and max-width - задает значение от sm до md
+//*        only-max == задает значение от указанного breakpoint до максимально значение в  $media-breakpoints
+//*
+//*
+//?    Type
+//*    
+//*        $media-type: (
+//*            'screen': 'screen',
+//*            'print': 'print',
+//*            'handheld': 'handheld',
+//*            'landscape': '(orientation: landscape)',
+//*            'portrait': '(orientation: portrait)',
+//*            'retina2x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)',
+//*            'retina3x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi), (min-resolution: 3dppx)'
+//*        )
+//*
+//?    Ошибки
+//*        @include media(no)()         - breakpoint обязателен
+//*        @include media(no, no)()     - breakpoint и (модификатор или breakpoint ) обязателен
+//*        @include media(sm, sm) {}    - не может быть равным второму breakpoint 
+//*        @include media(lg, sm) {}    - не может быть больше второго breakpoint 
+//*        @include media(no, only) {}  - не может модификатор быть без breakpoint
+//*        Если не правильно задан breakpoint или модификатор, то выведет ошибку

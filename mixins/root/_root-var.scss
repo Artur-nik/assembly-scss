@@ -1,0 +1,16 @@
+﻿//? Функция вывода переменной  
+@function root-var($value, $var-css: false) { 
+    @if not(variable-exists(default)) {
+        @warn "variable not found #{$default}";
+    } 
+    @if index($default, $value) and $var-css == false {
+        @return var(--$value);
+    } 
+    @else if map-has-key($default, $value) == true and $var-css == true {
+        @return map-get($default, $value);
+    } 
+    @else {
+        @warn 'Value unknown, available values:: #{$default}';
+        @return null;
+    }
+}

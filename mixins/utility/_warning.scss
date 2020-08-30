@@ -1,0 +1,22 @@
+﻿@mixin warning($comparison,$description, $display-only-warning: false) {
+    @if $display-only-warning == false{
+        @if $comparison {
+            @content;    
+        } @else {
+            @warn $description;
+        }        
+    } @else if $display-only-warning == true{
+        @if $comparison {
+            @content;    
+            @warn $description;
+        }   
+    } @else {
+        @warn "display-only-warning == true or false";
+    }
+}
+
+//*     @include warning(
+//*         $comparison,
+//*         $description,
+//*         true
+//*     ){}

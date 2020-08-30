@@ -1,0 +1,12 @@
+﻿//mod Проверка глобальных переменных
+@import 'validation-var/variables';
+
+//* Utility 
+//? Вывод ошибок
+@import 'utility/warning';
+//! end utility
+
+//mod Подключаем медиа запросы на основе breakpoint
+@import 'media/media';
+@import 'fonts/fonts-map';
+@import 'grid/grid';

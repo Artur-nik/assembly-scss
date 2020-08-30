@@ -1,0 +1,39 @@
+﻿//mod Файл проверки глобальных переменных
+//? Проверка есть ли переменная $media-breakpoints, если нет то задаем default переменную
+@if not(variable-exists(media-breakpoints)) {
+    $media-breakpoints: (
+        sm: 576rem,       
+        md: 768px,          
+        lg: 992px,          
+        xl: 1200px             
+    ) !global;
+} 
+//? Есть ли переменная: $media-type, если нет то задаем default переменную
+@if not(variable-exists(media-type)) {
+    $media-type: (
+      'screen': 'screen',
+      'print': 'print',
+      'handheld': 'handheld',
+      'landscape': '(orientation: landscape)',
+      'portrait': '(orientation: portrait)',
+      'retina2x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)',
+      'retina3x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi), (min-resolution: 3dppx)'
+    ) !global;
+}
+//? Есть ли переменная: $gutters, если нет то задаем default переменную 
+@if not(variable-exists(columns)) {
+    $columns: 12 !global;
+} 
+//? Есть ли переменная: $gutters, если нет то задаем default переменную 
+@if not(variable-exists(gutters)) {
+    $gutters: 30px !global;
+} 
+//? Проверка есть ли переменная $container-max, если нет то задаем default переменную
+@if not(variable-exists(container)) {
+    $container-max: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px,          
+    ) !global;
+} 
