@@ -75,11 +75,3 @@
         @return null;
     }
 }
-
-.test {
-    height: 100px;
-    width: 100px;
-    background: #000;
-    //border-radius: radius(20px, bottom-left);
-    @include radius(20px, bottom-side);
-}
