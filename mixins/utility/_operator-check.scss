@@ -1,0 +1,8 @@
+﻿@function number-valid($value){
+    @if type-of($value) == number {
+        @return true;
+    }@else {
+        @warn 'The value is not a number';
+        @return false;
+    }
+}

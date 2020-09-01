@@ -1,51 +1,56 @@
 ﻿@mixin radius($value, $side: null) {
-    @if $value == circle{
-        border-radius: 50%;
+    @if number-valid($value) {
+        @if $side == circle{
+            height: $value;
+            width: $value;
+            border-radius: 50%;
+        }
+        @else if $side == top-left{
+            border-top-left-radius:$value;
+        }   
+        @else if $side == top-right{
+            border-top-right-radius:$value;      
+        }
+        @else if $side == bottom-left{
+            border-bottom-left-radius:$value;    
+        }
+        @else if $side == bottom-right{
+            border-bottom-right-radius:$value;    
+        }
+        @else if $side == left-side{
+            border-top-left-radius:$value;
+            border-bottom-left-radius:$value;    
+        }
+        @else if $side == right-side{
+            border-top-right-radius:$value;    
+            border-bottom-right-radius:$value;   
+        }
+        @else if $side == top-side{
+            border-top-left-radius:$value;
+            border-top-right-radius:$value;  
+        }
+        @else if $side == bottom-side{
+            border-bottom-left-radius:$value;   
+            border-bottom-right-radius:$value;     
+        } 
+        @else if not($value == circle) {
+            @warn "radius value: 
+                    1 value -   number
+                    2 value -   circle,
+                                top-left, 
+                                top-right, 
+                                bottom-left, 
+                                bottom-righ, 
+                                left-side, 
+                                right-side, 
+                                bottom-side";
+        }
+    } @else {
+        @warn 'Requires a value as a number';
     }
-    @if $side == top-left{
-        border-top-left-radius:$value;
-    }   
-    @else if $side == top-right{
-        border-top-right-radius:$value;      
-    }
-    @else if $side == bottom-left{
-        border-bottom-left-radius:$value;    
-    }
-    @else if $side == bottom-right{
-        border-bottom-right-radius:$value;    
-    }
-    @else if $side == left-side{
-        border-top-left-radius:$value;
-        border-bottom-left-radius:$value;    
-    }
-    @else if $side == right-side{
-        border-top-right-radius:$value;    
-        border-bottom-right-radius:$value;   
-    }
-    @else if $side == top-side{
-        border-top-left-radius:$value;
-        border-top-right-radius:$value;  
-    }
-    @else if $side == bottom-side{
-        border-bottom-left-radius:$value;   
-        border-bottom-right-radius:$value;     
-    } 
-    @else if not($value == circle) {
-        @warn "radius value: 
-                1 value -   circle or number
-                2 value -   top-left, 
-                            top-right, 
-                            bottom-left, 
-                            bottom-righ, 
-                            left-side, 
-                            right-side, 
-                            bottom-side";
-    }
+
 }
 @function radius($value, $side: null){
-    @if $value == circle{
-        @return 50%;
-    }
     @if $side == top-left{
        @return $value 0 0 0;
     }   
@@ -70,8 +75,13 @@
     @else if $side == bottom-side{
         @return 0 0 $value $value;
     } 
-    @else if not($value == circle) {
+    @else {
         @warn "radius value: 1 value - circle or number; 2 value - top-left, top-right, bottom-left, bottom-righ, left-side, right-side, bottom-side";
         @return null;
     }
+}
+.test {
+    @include radius(265px, circle);
+    background: #000;
+    float: right;
 }
