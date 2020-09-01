@@ -28,13 +28,13 @@
                 @return true;
             }   @else {
                 @warn 'Value is required: #{map-keys($units)}';
-                @return null;
+                @return '';
             }
         } @else {
             //@warn 'Unit required: #{$value}';
             @return null;
         }
     } @else {
-        @return null;
+        @return '';
     }
 }
