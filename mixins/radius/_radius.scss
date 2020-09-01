@@ -1,0 +1,85 @@
+﻿@mixin radius($value, $side: null) {
+    @if $value == circle{
+        border-radius: 50%;
+    }
+    @if $side == top-left{
+        border-top-left-radius:$value;
+    }   
+    @else if $side == top-right{
+        border-top-right-radius:$value;      
+    }
+    @else if $side == bottom-left{
+        border-bottom-left-radius:$value;    
+    }
+    @else if $side == bottom-right{
+        border-bottom-right-radius:$value;    
+    }
+    @else if $side == left-side{
+        border-top-left-radius:$value;
+        border-bottom-left-radius:$value;    
+    }
+    @else if $side == right-side{
+        border-top-right-radius:$value;    
+        border-bottom-right-radius:$value;   
+    }
+    @else if $side == top-side{
+        border-top-left-radius:$value;
+        border-top-right-radius:$value;  
+    }
+    @else if $side == bottom-side{
+        border-bottom-left-radius:$value;   
+        border-bottom-right-radius:$value;     
+    } 
+    @else if not($value == circle) {
+        @warn "radius value: 
+                1 value -   circle or number
+                2 value -   top-left, 
+                            top-right, 
+                            bottom-left, 
+                            bottom-righ, 
+                            left-side, 
+                            right-side, 
+                            bottom-side";
+    }
+}
+@function radius($value, $side: null){
+    @if $value == circle{
+        @return 50%;
+    }
+    @if $side == top-left{
+       @return $value 0 0 0;
+    }   
+    @else if $side == top-right{
+        @return 0 $value 0 0;
+    }
+    @else if $side == bottom-left{
+        @return 0 0 0 $value;
+    }
+    @else if $side == bottom-right{
+        @return 0 0  $value 0;
+    }
+    @else if $side == left-side{
+        @return $value 0 0 $value;
+    }
+    @else if $side == right-side{
+        @return 0 $value $value 0;
+    }
+    @else if $side == top-side{
+        @return $value $value 0 0;
+    }
+    @else if $side == bottom-side{
+        @return 0 0 $value $value;
+    } 
+    @else if not($value == circle) {
+        @warn "radius value: 1 value - circle or number; 2 value - top-left, top-right, bottom-left, bottom-righ, left-side, right-side, bottom-side";
+        @return null;
+    }
+}
+
+.test {
+    height: 100px;
+    width: 100px;
+    background: #000;
+    //border-radius: radius(20px, bottom-left);
+    @include radius(20px, bottom-side);
+}
