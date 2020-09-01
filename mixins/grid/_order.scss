@@ -56,7 +56,9 @@
 
 
 @mixin order($order: 1, $media: null) {
-    @if type-of($order) == number {
+    @if type-of($order) == number {    
+        // Округляем значения $col
+        $order:round($order);
         @if $order == 0{
             @if $media == null {
                 order: 0;
@@ -119,21 +121,4 @@
     @else {
         @warn 'order() only takes values - last, first, 0 - #{$columns} - #{$columns + 1}';
     }
-}
-.test-order-1 {
-    
-    @include media(md) {
-        @include col(0, null, no-extend);
-        order: 0;
-    }
-    
-}
-.test-order-2 {
-    @include order(first, md);
-}
-.test-order-3 {
-    @include order(last, md);
-}
-.test-order-fun {
-    order: order(12);
 }

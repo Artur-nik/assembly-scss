@@ -13,6 +13,8 @@
 
 @mixin col($col: 1, $media: null,$extend: extend, $gutters: gutters, $width: width, $important: false) {
     @if type-of($col) == number {
+        // Округляем значения $col
+        $col:round($col);   
         @if $col == 0{
             @if $extend == no-extend {
                 @include _grid-no-extend($media, $gutters, $width, $important) {
@@ -116,13 +118,4 @@
     @if not($important == true or $important == false){
         @warn '$important value == true and false'; 
     }
-}
-.test-0 {
-    @include col(10, null, no-extend, gutters, width);
-} 
-.test-1 {
-    @include col(10, null, no-extend, gutters, width);
-}
-.test-2 {
-    @include col(7, null, no-extend, gutters, width);
 }

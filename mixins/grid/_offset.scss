@@ -1,1 +1,84 @@
-﻿// модификатор right
+﻿//? Создаем @extend для @mixin offset left
+@each $col in $columns-value {
+    @if not($col == length($columns-value)) {
+        %margin-left-#{$col} {
+            margin-left: (100% / ($columns / $col));
+        }
+    }
+}
+//? Создаем @extend для @mixin offset left чтобы можно было работать с @mixin media
+@each $breakpoints-value in map-keys($media-breakpoints) {
+    @include media($breakpoints-value){
+        @each $col in $columns-value {
+            @if not($col == length($columns-value)) {
+                %margin-left-#{$col}-#{$breakpoints-value} {
+                    margin-left: (100% / ($columns / $col));
+                }
+            }
+        }
+    }
+}
+//? Создаем @extend для @mixin offset right
+@each $col in $columns-value {
+    @if not($col == length($columns-value)) {
+        %margin-right-#{$col} {
+            margin-right: (100% / ($columns / $col));
+        }
+    }
+}
+//? Создаем @extend для @mixin offset right чтобы можно было работать с @mixin media
+@each $breakpoints-value in map-keys($media-breakpoints) {
+    @include media($breakpoints-value){
+        @each $col in $columns-value {
+            @if not($col == length($columns-value)) {
+                %margin-right-#{$col}-#{$breakpoints-value} {
+                    margin-right: (100% / ($columns / $col));
+                }
+            }
+        }
+    }
+}
+
+@mixin offset($value: 1, $media: null, $side: left) {
+    @if type-of($value) == number {
+        $value:round($value);
+        @if $value <= ($columns - 1) and not($value == 0) {
+            @if $side == left{
+                @if $media == null {
+                    @extend %margin-left-#{$value};
+                } @else {
+                    @extend %margin-left-#{$value}-#{$media}; 
+                }
+            }
+            @if $side == right{
+                @if $media == null {
+                    @extend %margin-right-#{$value};
+                } @else {
+                    @extend %margin-right-#{$value}-#{$media}; 
+                }
+            }
+        }@else {
+            @warn 'The number of "offset" cannot exceed #{$columns - 1}';
+        }
+    }@else {
+        @warn 'The number of "offset" cannot exceed #{$columns - 1}';
+    }
+    //! Проверка ошибок
+    @if not($side == right or $side == left) {
+        @warn '$side value == right and left'; 
+    }
+}
+@function offset($value: 1) {
+    @if type-of($value) == number {
+        $value:round($value);
+        @if $value <= ($columns - 1) and not($value == 0) {
+            @return (100% / ($columns / $value)); 
+        }@else {
+            @warn 'The number of "offset" cannot exceed #{$columns - 1}';
+            @return null;
+        }
+    }@else {
+        @warn 'The number of "offset" cannot exceed #{$columns - 1}';
+        @return null;
+    }
+}
