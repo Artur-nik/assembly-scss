@@ -1,1 +1,139 @@
-﻿
+﻿//? Создаем @extend last для @mixin order
+%order-first {
+    order: -1;
+}
+//? Создаем @extend first для @mixin order чтобы можно было работать с @mixin media
+@each $breakpoints-value in map-keys($media-breakpoints) {
+    @include media($breakpoints-value){
+        %order-first-#{$breakpoints-value} {
+            order: -1;
+        }
+    }
+}
+
+//? Создаем @extend last для @mixin order
+%order-last {
+    order: #{$columns + 1};
+}
+//? Создаем @extend last для @mixin order чтобы можно было работать с @mixin media
+@each $breakpoints-value in map-keys($media-breakpoints) {
+    @include media($breakpoints-value){
+        %order-last-#{$breakpoints-value} {
+            order: #{$columns + 1};
+        }
+    }
+}
+
+//? Создаем @extend 0 для @mixin order
+%order-0 {
+    order: 0;
+}
+
+//? Создаем @extend 0 для @mixin order чтобы можно было работать с @mixin media
+@each $breakpoints-value in map-keys($media-breakpoints) {
+    @include media($breakpoints-value){
+        %order-0-#{$breakpoints-value} {
+            order: 0;
+        }
+    }
+}
+//? Создаем @extend для @mixin order
+@each $order in $columns-value {
+    %order-#{$order} {
+        order: $order;
+    }
+}
+//? Создаем @extend для @mixin order чтобы можно было работать с @mixin media
+@each $breakpoints-value in map-keys($media-breakpoints) {
+    @include media($breakpoints-value){
+        @each $order in $columns-value {
+            %order-#{$order}-#{$breakpoints-value} {
+                order: $order;
+            }
+        }
+    }
+}
+
+
+@mixin order($order: 1, $media: null) {
+    @if type-of($order) == number {
+        @if $order == 0{
+            @if $media == null {
+                order: 0;
+            } @else {
+                @include media($media){
+                    order: 0; 
+                }   
+            }
+        }
+        @else if $order <= $columns {
+            @if $media == null {
+                @extend %order-#{$order};
+            } @else {
+                @include media($media){
+                    @extend %order-#{$order}-#{$media}; 
+                }
+            }
+        }
+        @else {
+            @warn 'The number of "order" cannot exceed #{$columns}';
+        } 
+    }
+    @else if $order == first{
+        @if $media == null {
+            @extend %order-first;
+        } @else {
+            @include media($media){
+                @extend %order-first-#{$media}; 
+            }
+        }
+    }
+    @else if $order == last {
+        @if $media == null {
+            @extend %order-last;
+        } @else {
+            @include media($media){
+                @extend %order-last-#{$media}; 
+            }
+        }      
+    }
+    @else {
+        @warn 'order() only takes values - last, first, 0 - #{$columns} - #{$columns + 1}';
+    }
+}
+@function order($order: 1) {  
+    @if type-of($order) == number {
+        @if $order == 0{
+            @return 0;
+        } @else if $order <= $columns {
+            @return $order;
+        }
+    }     
+    @else if type-of($order) == string {
+        @if $order == last {
+            @return $columns + 1;
+        } @else if $order == first {
+            @return -1;
+        } 
+    }
+    @else {
+        @warn 'order() only takes values - last, first, 0 - #{$columns} - #{$columns + 1}';
+    }
+}
+.test-order-1 {
+    
+    @include media(md) {
+        @include col(0, null, no-extend);
+        order: 0;
+    }
+    
+}
+.test-order-2 {
+    @include order(first, md);
+}
+.test-order-3 {
+    @include order(last, md);
+}
+.test-order-fun {
+    order: order(12);
+}

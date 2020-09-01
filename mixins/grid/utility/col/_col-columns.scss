@@ -1,10 +1,4 @@
-﻿//* Создаем пустой лист для @for $columns
-$columns-value:();
-//? Создаем переменную $columns-value формата 1 2 3 4 5 6 7 8 9 10 11 12
-@for $i from 1 through $columns {
-    $columns-value: join($columns-value, $i);
-}
-//? Создаем @extend для @mixin col 
+﻿//? Создаем @extend для @mixin col 
 @each $col in $columns-value {
     %col-#{$col} {
         flex: 0 0 (100% / ($columns / $col));

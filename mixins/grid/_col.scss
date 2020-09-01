@@ -1,8 +1,6 @@
-﻿@import 'utility/width';
-@import 'utility/gutters';
-@import 'utility/col-auto';
-@import 'utility/col-0';
-@import 'utility/col-columns';
+﻿@import 'utility/col/col-auto';
+@import 'utility/col/col-0';
+@import 'utility/col/col-columns';
 
 //info @include col(
 //info     1 value - 0 - $columns (12), auto
@@ -74,7 +72,7 @@
             }      
         } 
         @else {
-            @warn The number of columns cannot exceed #{$columns};
+            @warn 'The number of columns cannot exceed #{$columns}';
         } 
     } 
     @else if $col == auto {
@@ -114,6 +112,9 @@
     }
     @if index((gutters, gutters-left, gutters-right, no-gutters), $gutters) == null{
         @warn 'Gutters value == gutters, gutters-left, gutters-right, no-gutters';
+    }
+    @if not($important == true or $important == false){
+        @warn '$important value == true and false'; 
     }
 }
 .test-0 {
