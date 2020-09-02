@@ -7,7 +7,7 @@
 //info     2 value - null, $media-breakpoints 
 //info     3 value - extend, no-extend
 //info     4 value - gutters, gutters-left, gutters-right, no-gutters
-//info     5 value - width or no-width
+//info     5 value - width or off-width
 //info     6 value - true or false (important)
 //info );
 
@@ -106,14 +106,14 @@
         @warn 'col () only takes values - auto, 0 - #{$columns}';
     }
     //! Проверка на ошибки:
-    @if not($width == width or $width == no-width){
-        @warn 'width value == width and no-width'; 
+    @if not($width == width or $width == off-width){
+        @warn 'width value == width and off-width'; 
     }
     @if not($extend == extend or $extend == no-extend){
         @warn 'extend value == extend and no-extend'; 
     }
-    @if index((gutters, gutters-left, gutters-right, no-gutters), $gutters) == null{
-        @warn 'Gutters value == gutters, gutters-left, gutters-right, no-gutters';
+    @if index((gutters, gutters-left, gutters-right, no-gutters, off-gutters), $gutters) == null{
+        @warn 'Gutters value == gutters, gutters-left, gutters-right, no-gutters, off-gutters';
     }
     @if not($important == true or $important == false){
         @warn '$important value == true and false'; 
