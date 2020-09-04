@@ -80,8 +80,3 @@
         @return null;
     }
 }
-.test {
-    @include radius(265px, circle);
-    background: #000;
-    float: right;
-}

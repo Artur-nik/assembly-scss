@@ -1,0 +1,23 @@
+﻿%display-none {
+    display: none;
+}
+@mixin hide($bp: null, $mod: min, $extend: extend) {
+    @if $bp == null or ($bp == null and $mod == null) {
+        @if $extend == extend {
+            @extend %display-none;
+        } @else {
+            display: none;
+        }
+    }
+    @if map-has-key($media-breakpoints, $bp) {
+        @include media($bp, $mod){
+            display: none; 
+        }
+    }
+}
+.test-hide {
+    @include hide(sm, only);
+}
+.test-hide-value {
+    @include hide;
+}
